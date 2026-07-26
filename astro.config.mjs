@@ -24,6 +24,11 @@ export default defineConfig({
       social: [{ icon: 'github', label: 'GitHub', href: REPO_URL }],
       editLink: { baseUrl: `${REPO_URL}/edit/main/` },
       lastUpdated: true,
+      // Off by default: most pages here have one heading, so the "On this page"
+      // rail costs about a third of the width to list a single link. Pages long
+      // enough to need one opt back in with `tableOfContents: true` in frontmatter,
+      // which takes precedence over this setting.
+      tableOfContents: false,
       customCss: [
         '@fontsource-variable/fraunces',
         '@fontsource/ibm-plex-sans/400.css',

@@ -3,6 +3,8 @@ title: Sources
 description: Curated primary sources — regulators and standards bodies first, because they are free and authoritative.
 sidebar:
   order: 2
+# Four browsable categories — worth a TOC. See tableOfContents in astro.config.mjs.
+tableOfContents: true
 status: draft
 sources:
   - Compiled links, verified reachable 2026-07

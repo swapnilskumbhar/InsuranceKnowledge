@@ -3,6 +3,11 @@ title: The Insurance Domain Model
 description: The six core entities every policy administration system is built from, why they take the shape they do, and the modelling mistakes that are expensive to undo.
 sidebar:
   order: 1
+# Long enough to navigate — 10 sections. Opts back in to the site-wide default of no TOC.
+# Capped at h2: including the 15 h3s made a 26-entry rail that needed its own scrolling.
+tableOfContents:
+  minHeadingLevel: 2
+  maxHeadingLevel: 2
 verified: 2026-07
 status: draft
 sources:
