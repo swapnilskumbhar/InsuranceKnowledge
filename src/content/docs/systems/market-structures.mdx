@@ -1,0 +1,139 @@
+---
+title: Market Structures
+description: Where a market's structure — not its vocabulary — breaks the assumptions built into most policy systems.
+sidebar:
+  order: 3
+status: draft
+sources:
+  - Author synthesis from implementation practice — REQUIRES REVIEW
+  - Lloyd's and NAIC public market descriptions
+---
+
+import Ledger from '@components/Ledger.astro';
+import LedgerRow from '@components/LedgerRow.astro';
+import Eg from '@components/Eg.astro';
+import Example from '@components/Example.astro';
+import SystemsNote from '@components/SystemsNote.astro';
+import Gaps from '@components/Gaps.astro';
+
+[Market vocabulary](../../foundations/market-vocabulary/) deals with markets
+calling the same thing by different names. This page deals with the harder case: markets that
+are **shaped differently**, in ways that invalidate assumptions most systems bake in on day one.
+
+Three assumptions in particular:
+
+1. *A policy has one insurer.*
+2. *A product is one thing, approved once.*
+3. *A policy is either in force or not.*
+
+Each is false in at least one major market.
+
+## The London subscription market
+
+A large risk placed at Lloyd's is not written by an insurer. It is written by **several
+syndicates, each taking a percentage line**, recorded on a slip. The broker builds the
+placement until the risk is fully subscribed.
+
+<Ledger>
+  <LedgerRow term="Slip">
+    The placing document. Records the risk, the terms, and which syndicates have taken what
+    share.
+  </LedgerRow>
+  <LedgerRow term="Written line vs signed line">
+    Underwriters write for more than they intend to keep when a risk is oversubscribed; lines are
+    then scaled down proportionally. The **signed line** is the final binding share.
+    <Eg>a syndicate writes 15% on a risk subscribed to 150%; its signed line is 10%.</Eg>
+  </LedgerRow>
+  <LedgerRow term="Leader / following market">
+    The lead underwriter negotiates terms and typically drives claims decisions; followers take
+    the same terms on their share.
+  </LedgerRow>
+</Ledger>
+
+<Example label="Worked example">
+A ₹500 crore energy risk is placed across four syndicates with signed lines of 40%, 30%, 20%
+and 10%. Annual premium is ₹5 crore.
+
+Premium splits **40 / 30 / 20 / 10** → ₹2 cr, ₹1.5 cr, ₹1 cr, ₹0.5 cr.
+
+A ₹80 crore loss splits on the same shares → ₹32 cr, ₹24 cr, ₹16 cr, ₹8 cr.
+
+The policy is one contract with **four** premium receivables and four claim payables, and each
+participation is separately reported, reserved and settled. *(Illustrative figures.)*
+</Example>
+
+<SystemsNote>
+"Insurer" cannot be a foreign key on the policy. A policy carries an **ordered set of
+participations**, each with a party, a signed share, and its own financial postings.
+
+Systems built single-carrier retrofit this as a "co-insurance" side table, and then discover
+that premium, commission, claims, reserves, reinsurance and bordereaux all need to split by
+share — which means the share belongs in the core model, not bolted beside it.
+</SystemsNote>
+
+## The US: admitted, surplus lines, and fifty regulators
+
+Insurance in the US is regulated **by state**. There is no single national product approval.
+
+<Ledger>
+  <LedgerRow term="Admitted (licensed)">
+    The insurer is licensed in that state and its rates and forms are filed with the state
+    regulator. Policyholders are protected by the state guaranty fund.
+  </LedgerRow>
+  <LedgerRow term="Surplus lines (non-admitted)">
+    For risks the admitted market declines. The carrier is not licensed in that state, is
+    generally free from rate and form filing, and the policy attracts a **surplus lines tax**.
+    No guaranty fund backing.
+    <Eg>a coastal property or an unusual cyber exposure that admitted carriers won't quote.</Eg>
+  </LedgerRow>
+  <LedgerRow term="Rate and form filing">
+    Admitted products must have their wordings and rates approved — state by state, with
+    different rules and different effective dates in each.
+  </LedgerRow>
+</Ledger>
+
+<SystemsNote>
+**A "product" in the US is a matrix, not a record.** One product across 50 states is up to 50
+approved variants, each with its own forms, rate tables and effective dates — and they do not
+change in step.
+
+This is the single largest driver of product-configuration complexity in US platforms, and it
+is why `systems/product-configuration` is a release-management problem rather than a data-entry
+one. It also means **admitted status is a policy attribute with tax and compliance
+consequences**, not a property of the carrier alone.
+</SystemsNote>
+
+## Compulsory covers differ, so validation differs
+
+What the law forces someone to buy varies by market, and mandatory cover is where hard
+validation rules live.
+
+<Ledger>
+  <LedgerRow term="India">
+    Motor third-party liability is compulsory under the Motor Vehicles Act.
+  </LedgerRow>
+  <LedgerRow term="United Kingdom">
+    Motor third-party and **employers' liability** are compulsory for most employers.
+  </LedgerRow>
+  <LedgerRow term="United States">
+    Workers' compensation is mandated at state level, with rules and monopolistic state funds
+    varying between states.
+  </LedgerRow>
+</Ledger>
+
+<SystemsNote>
+Compulsory cover is the one place a system should refuse to issue. But *which* cover is
+compulsory is jurisdictional, so the rule belongs in **market-scoped configuration**, never in
+application code — otherwise entering a new market means a release rather than a config change.
+</SystemsNote>
+
+<Gaps>
+- The EU is named nowhere here. Freedom of services and establishment — writing across borders
+  on one licence — changes which regulator's rules apply per risk, and that is a real modelling
+  problem left unwritten.
+- Delegated authority and binders are mentioned across the handbook but never modelled, and they
+  are the mechanism behind much of the London and MGA markets.
+- Bordereaux formats are referenced repeatedly and shown nowhere.
+- Every regulatory statement on this page needs a `verified:` date and a primary citation. The
+  structural claims are stable; the specifics are not.
+</Gaps>

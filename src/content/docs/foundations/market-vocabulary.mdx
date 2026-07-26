@@ -1,0 +1,122 @@
+---
+title: Market Vocabulary
+description: The same concept named differently across India, the US and London — and the pairs that look like synonyms but are not.
+sidebar:
+  order: 5
+status: draft
+sources:
+  - Author synthesis from implementation practice — REQUIRES REVIEW
+  - Terminology cross-checked against IRMI and NAIC public glossaries
+---
+
+import Ledger from '@components/Ledger.astro';
+import LedgerRow from '@components/LedgerRow.astro';
+import Eg from '@components/Eg.astro';
+import Example from '@components/Example.astro';
+import SystemsNote from '@components/SystemsNote.astro';
+import Gaps from '@components/Gaps.astro';
+
+Most cross-market confusion is harmless: two markets use different words for one thing, you
+map them once and move on. The dangerous cases are the pairs that **look** like translations
+and are not — where treating them as synonyms silently corrupts the model.
+
+This page separates the two.
+
+## Same concept, different word
+
+Safe to map. One field, one meaning, several labels.
+
+| Concept | India | US | UK / London |
+|---|---|---|---|
+| The non-life industry | General Insurance | Property & Casualty (P&C) | General Insurance / Non-life |
+| First slice borne by the insured | Excess | Deductible | Excess |
+| Renewal discount for claim-free years | No Claim Bonus (NCB) | Claims-free discount | No Claims Discount (NCD) |
+| Notifying a loss | Intimation / FNOL | First Notice of Loss (FNOL) | Notification / FNOL |
+| Anyone who sells | Agent / Intermediary | Producer | Intermediary |
+| Person who quantifies a loss | Surveyor & Loss Assessor | Adjuster | Loss adjuster |
+| Mid-term change | Endorsement | Endorsement | Endorsement |
+
+<Ledger>
+  <LedgerRow term="Excess / Deductible">
+    The same mechanic under two names — the amount the insured bears before the insurer pays.
+    Build one field.
+    <Eg>a UK motor policy's "£250 excess" and a US auto policy's "$250 deductible" are the same thing.</Eg>
+  </LedgerRow>
+  <LedgerRow term="Producer">
+    A US umbrella term covering agents and brokers alike. It says nothing about whom the person
+    legally represents, which is the distinction that actually matters.
+  </LedgerRow>
+</Ledger>
+
+## Different concept, similar word
+
+This is where the money is. These pairs are **not** interchangeable, and modelling them as one
+field loses information you cannot reconstruct later.
+
+<Ledger>
+  <LedgerRow term="Sum insured vs Limit">
+    Not synonyms. A **sum insured** is typically the declared value of the thing insured, and it
+    drives the premium. A **limit** is the maximum the insurer will pay, and it constrains the
+    claim. They coincide in simple property covers and diverge everywhere else.
+    <Eg>a liability policy has a limit of ₹5 crore but no sum insured at all — there is no "value" of your legal liability to declare.</Eg>
+  </LedgerRow>
+  <LedgerRow term="IDV vs Agreed Value vs ACV">
+    Three different answers to "what is the vehicle worth at claim time." **IDV** (India) is
+    computed from a regulator-referenced depreciation schedule and fixed at inception.
+    **Agreed value** is negotiated up front and paid regardless of later depreciation.
+    **Actual Cash Value** (US) is assessed *at the time of loss*.
+    <Eg>the same car total-lossed on the same day pays a schedule figure, a contract figure, or a market assessment — three numbers, three mechanisms.</Eg>
+  </LedgerRow>
+  <LedgerRow term="Agent — India/UK vs US">
+    In India and the UK an agent represents the **insurer** and a broker represents the
+    **customer**; the distinction is regulated and determines who is liable for bad advice. US
+    usage folds both into "producer", and independent agents may hold appointments with many
+    carriers.
+  </LedgerRow>
+  <LedgerRow term="Health insurance">
+    Barely the same product across markets. India: indemnity or fixed-benefit cover, cashless
+    settlement through TPAs at network hospitals. US: a payer–provider system with networks,
+    Explanation of Benefits, and X12 EDI claim transactions.
+    <Eg>an Indian pre-authorisation and a US prior authorisation solve superficially similar problems through entirely different data standards.</Eg>
+  </LedgerRow>
+</Ledger>
+
+<Example label="Why the sum insured / limit distinction bites">
+A property policy is written with sum insured ₹2 crore. A claim comes in at ₹2.4 crore.
+
+If the schema stored one number called `limit`, the answer looks obvious: pay ₹2 crore. But
+the sum insured also feeds **average** (underinsurance): if the building's actual
+reconstruction cost was ₹4 crore, the insured declared half the true value, and the settlement
+may be proportionately reduced — closer to ₹1.2 crore — even though the claim is under the
+"limit".
+
+Two different numbers, doing two different jobs, from one collapsed field.
+*(Illustrative figures; the application of average varies by wording and market.)*
+</Example>
+
+<SystemsNote>
+**Store the concept, render the label.** Field names should encode meaning, not the vocabulary
+of the first market you shipped in. A column called `deductible` becomes a permanent tell that
+the system was built US-first, and it will be mislabelled on every UK schedule you generate.
+
+Three concrete rules that follow:
+
+1. **One field for excess/deductible.** True synonyms — the difference is presentation, so make
+   it a display concern driven by market, not a schema concern.
+2. **Never collapse sum insured into limit.** They drive different calculations (premium versus
+   settlement) and can legitimately both exist, or either exist alone.
+3. **Model vehicle value as a *method*, not an amount.** `IDV`, `agreed`, and `ACV` differ in
+   *when* and *how* the figure is determined. Storing only the number loses the mechanism, and
+   the mechanism is what claims needs.
+</SystemsNote>
+
+<Gaps>
+- Covers India, US and UK/London only. Nothing on EU, Singapore, Australia or the Gulf.
+- Life and annuity vocabulary is absent — participating/with-profits, surrender, paid-up all
+  differ across markets.
+- Terminology is author synthesis cross-checked against public glossaries, not sourced
+  claim-by-claim. The "different concept" table is the part most in need of practitioner review,
+  because that is where being wrong is expensive.
+- Average/underinsurance is used in the worked example but is not explained anywhere in the
+  handbook.
+</Gaps>

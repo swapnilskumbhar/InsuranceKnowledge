@@ -35,6 +35,7 @@ export const CATEGORIES = [
   'Distribution',
   'Ecosystem',
   'Systems',
+  'Markets',
   'Innovation',
 ] as const;
 
@@ -294,5 +295,84 @@ export const glossary: Term[] = [
     category: 'Finance',
     definition: 'The international accounting standard for insurance contracts — a major systems programme.',
     eg: 'policies regrouped into annual cohorts with a Contractual Service Margin.',
+  },
+
+  // ─── Cross-market terms ────────────────────────────────────────────────────
+  // Included where the concept differs enough between markets to change the model,
+  // not merely the label. See foundations/market-vocabulary.
+  {
+    term: 'Admitted / Non-admitted',
+    category: 'Markets',
+    definition:
+      'US: whether the insurer is licensed in that state. Admitted carriers file rates and forms and are backed by the state guaranty fund; non-admitted ones are not.',
+    eg: 'a coastal property the admitted market declines is written non-admitted instead.',
+    seeAlso: 'systems/market-structures',
+  },
+  {
+    term: 'Surplus Lines',
+    category: 'Markets',
+    definition:
+      'US: business placed with a non-admitted carrier for risks the admitted market will not take. Generally free of rate and form filing, and taxed separately.',
+    eg: 'an unusual cyber exposure placed surplus lines, attracting a surplus lines tax.',
+    seeAlso: 'systems/market-structures',
+  },
+  {
+    term: 'Slip',
+    category: 'Markets',
+    definition:
+      'London market: the placing document recording a risk, its terms, and which syndicates have subscribed to what share.',
+    eg: 'a broker walks a slip round the Lloyd\'s boxes until the risk is fully subscribed.',
+    seeAlso: 'systems/market-structures',
+  },
+  {
+    term: 'Written line vs Signed line',
+    category: 'Markets',
+    definition:
+      'London market: underwriters write for more than they intend to keep when a risk is oversubscribed; lines are scaled down proportionally to the binding signed line.',
+    eg: 'a syndicate writes 15% on a risk subscribed to 150% — its signed line is 10%.',
+    seeAlso: 'systems/market-structures',
+  },
+  {
+    term: 'Co-insurance (subscription)',
+    category: 'Markets',
+    definition:
+      'One risk shared across several insurers, each on its own share. Distinct from the US health sense of co-insurance, which is a policyholder cost-share.',
+    eg: 'four syndicates on 40/30/20/10 split both the premium and every claim on those shares.',
+    seeAlso: 'systems/market-structures',
+  },
+  {
+    term: 'Sum Insured vs Limit',
+    category: 'Markets',
+    definition:
+      'Not synonyms. Sum insured is the declared value driving premium; limit is the maximum payable, constraining the claim. Either can exist without the other.',
+    eg: 'a liability policy has a ₹5 crore limit but no sum insured — legal liability has no declarable value.',
+    seeAlso: 'foundations/market-vocabulary',
+  },
+  {
+    term: 'IDV / Agreed Value / ACV',
+    category: 'Markets',
+    definition:
+      'Three mechanisms for valuing a vehicle at claim time: IDV (India) from a depreciation schedule fixed at inception, agreed value negotiated up front, Actual Cash Value assessed at the loss.',
+    eg: 'the same car total-lossed on the same day yields three different settlements.',
+    seeAlso: 'foundations/market-vocabulary',
+  },
+  {
+    term: 'Solvency II',
+    category: 'Markets',
+    definition: 'The EU/UK prudential regime setting capital requirements and supervisory reporting for insurers.',
+    eg: 'quarterly and annual quantitative reporting templates drawn from core system data.',
+  },
+  {
+    term: 'RBC',
+    category: 'Markets',
+    definition: 'Risk-Based Capital — the US solvency framework, administered at state level.',
+    eg: 'an insurer holding capital scaled to its underwriting and asset risk.',
+  },
+  {
+    term: 'Guaranty Fund',
+    category: 'Markets',
+    definition:
+      'US: a state-backed fund that pays claims if an admitted insurer becomes insolvent. Surplus lines business is not covered.',
+    eg: 'an admitted carrier fails; the state fund meets its policyholder claims up to statutory caps.',
   },
 ];

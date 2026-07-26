@@ -1,0 +1,90 @@
+---
+title: Regulators
+description: Who regulates which market, and what each one forces into the system — filing, solvency reporting, conduct, and data residency.
+sidebar:
+  order: 3
+status: draft
+sources:
+  - Regulator public websites (see reference/sources)
+  - Author synthesis — REQUIRES REVIEW
+---
+
+import Ledger from '@components/Ledger.astro';
+import LedgerRow from '@components/LedgerRow.astro';
+import Eg from '@components/Eg.astro';
+import SystemsNote from '@components/SystemsNote.astro';
+import Gaps from '@components/Gaps.astro';
+
+Regulators are the reason a large share of your backlog exists. This page is organised by
+**what each one makes the system do**, not by country trivia.
+
+## Who regulates where
+
+| Market | Body | Structure |
+|---|---|---|
+| India | **IRDAI** | Single national regulator for insurance |
+| United States | **NAIC** + state Departments of Insurance | NAIC coordinates; each state regulates and approves |
+| United Kingdom | **FCA** and **PRA** | Split: FCA conduct, PRA prudential |
+| European Union | **EIOPA** + national regulators | EIOPA sets direction; national bodies supervise |
+| Singapore | **MAS** | Single regulator across financial services |
+| Australia | **APRA** and **ASIC** | Split: APRA prudential, ASIC conduct |
+
+Two structural patterns matter more than the names:
+
+- **Single versus federated.** India and Singapore have one approval authority. The US has
+  fifty-plus. This is the difference between a product being *a thing* and a product being *a
+  matrix* — see [market structures](../../systems/market-structures/).
+- **Unified versus split mandate.** The UK and Australia separate conduct supervision from
+  prudential supervision. Two regulators means two reporting obligations drawing on different
+  slices of the same data.
+
+## What they force into the system
+
+<Ledger>
+  <LedgerRow term="Product filing">
+    Wordings and rates approved before sale. Drives product and rate **versioning tied to
+    approval state and effective date** — a filed version can never be silently edited.
+    <Eg>a rate revision effective 1 April applies to business incepting after that date, while mid-term endorsements on older policies keep the old rates.</Eg>
+  </LedgerRow>
+  <LedgerRow term="Solvency reporting">
+    Demonstrating capital adequacy — Solvency II (EU/UK), RBC (US), IRDAI's solvency margin.
+    Drives reserving data quality and the ability to reproduce a figure months later.
+  </LedgerRow>
+  <LedgerRow term="Conduct and complaints">
+    Fair treatment, disclosure at point of sale, complaint handling within deadlines. Drives
+    audit trails of **what was shown to the customer and when** — not just what was stored.
+  </LedgerRow>
+  <LedgerRow term="Statistical returns">
+    Periodic market data submissions in prescribed formats. Drives the reporting layer and, more
+    painfully, retrospective consistency when definitions change.
+  </LedgerRow>
+  <LedgerRow term="Data residency and retention">
+    Where policyholder data may physically live, and how long it must be kept. Drives hosting
+    region and archival strategy — decisions that are extremely expensive to reverse.
+    <Eg>a life policy sold today may need its data retained and readable for fifty years.</Eg>
+  </LedgerRow>
+</Ledger>
+
+<SystemsNote>
+Regulatory requirements land in the system as **non-functional requirements with functional
+consequences**, and they share one property: they are all about *reproducing the past*.
+
+Filing means you must show which approved version applied on a date. Solvency means you must
+reproduce a figure after the underlying policies moved on. Conduct means you must show what a
+customer was told before they bought.
+
+A system that only stores current state cannot satisfy any of them, no matter how many reports
+you bolt on afterwards. This is the same requirement that drives effective dating — regulation
+is simply the reason it is not optional.
+</SystemsNote>
+
+<Gaps>
+- Structural only. No treatment of any actual regime's requirements in detail — deliberately, per
+  the content plan's non-goal of covering "any single market's regulation in full", but it does
+  mean this page cannot answer a specific compliance question.
+- IRDAI's filing regime (use-and-file versus file-and-use) is the India-specific detail that
+  belongs here and is unwritten.
+- IFRS 17 spans several of these regimes and is named across the handbook without explanation.
+- Nothing carries a `verified:` date. Regulator names and structures are stable; their specific
+  requirements are not, and this page will go stale faster than any other.
+</Gaps>
