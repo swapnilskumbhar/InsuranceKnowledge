@@ -3,9 +3,10 @@ import starlight from '@astrojs/starlight';
 
 // ─── GitHub Pages deployment target ──────────────────────────────────────────
 // These two constants drive `site`, `base`, and every GitHub link below.
-// Set GITHUB_USER to your GitHub username before the first deploy.
-const GITHUB_USER = 'YOUR-GITHUB-USERNAME';
-const REPO = 'insurance-handbook';
+// REPO must match the repository name exactly — it becomes the URL path prefix,
+// and a mismatch serves a blank, unstyled page because every asset 404s.
+const GITHUB_USER = 'swapnilskumbhar';
+const REPO = 'InsuranceKnowledge';
 
 // Project site → https://<user>.github.io/<repo>/  (base is required)
 // For a user site (repo named <user>.github.io) set BASE = '/' instead.
