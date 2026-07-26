@@ -1,0 +1,25 @@
+---
+title: Glossary
+description: Insurance terms with a concrete example attached to each — searchable and filterable by category.
+sidebar:
+  order: 1
+status: draft
+sources:
+  - Author synthesis — REQUIRES REVIEW
+---
+
+import Glossary from '@components/Glossary.astro';
+import Gaps from '@components/Gaps.astro';
+
+Every entry carries an example, because a definition without an instance is exactly the
+vagueness this handbook exists to avoid. Terms are maintained in `src/data/glossary.ts` — the
+`eg` field is required by the type, so a term cannot be added without one.
+
+<Glossary />
+
+<Gaps>
+- 40 terms against a target of 300 (CONTENT-PLAN, Part VI).
+- No entry is sourced yet. The `sourced` flag exists on the type and is set on nothing.
+- Cross-links (`seeAlso`) point at several pages that do not exist yet — they will 404 until
+  those chapters are written.
+</Gaps>

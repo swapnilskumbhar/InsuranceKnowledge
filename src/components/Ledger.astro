@@ -1,0 +1,25 @@
+---
+/**
+ * Ledger — ruled definition rows.
+ *
+ * The handbook's default way of presenting a set of terms. Use for anything
+ * that is "term → meaning", where a plain bulleted list would lose the
+ * two-column scanability that makes these usable as a reference.
+ *
+ * Pair with <LedgerRow term="...">meaning<Eg>concrete example</Eg></LedgerRow>
+ */
+---
+
+<div class="ledger">
+  <slot />
+</div>
+
+<style>
+  .ledger {
+    border: 1px solid var(--ledger-border);
+    border-radius: 10px;
+    background: var(--ledger-surface);
+    overflow: hidden;
+    margin: 1.25rem 0;
+  }
+</style>

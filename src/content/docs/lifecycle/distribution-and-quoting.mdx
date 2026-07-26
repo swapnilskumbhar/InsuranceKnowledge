@@ -1,0 +1,30 @@
+---
+title: Distribution and Quoting
+description: Agents, brokers, bancassurance, aggregators and embedded — one product, many channels, and the largest integration surface you will design.
+sidebar:
+  order: 2
+status: draft
+sources:
+  - Author synthesis — REQUIRES REVIEW
+---
+
+import ChainSummary from '@components/ChainSummary.astro';
+import Gaps from '@components/Gaps.astro';
+
+<ChainSummary slug="lifecycle/distribution-and-quoting" />
+
+## One product, many channels
+
+The same product sold through three channels is three different systems problems: different
+commission structures, different data captured at proposal, different regulatory disclosure
+obligations, and different expectations about how fast a quote must return.
+
+Aggregators in particular invert the usual assumption — you are one of several quotes rendered
+side by side, and a slow response is functionally a declined risk.
+
+<Gaps>
+- No treatment of what a quote actually is as a domain object: how long it lives, whether it is
+  binding, and what happens when the rate version changes between quote and bind.
+- Commission structures are named but not modelled.
+- Nothing on aggregator integration patterns or the quote-journey timing budget.
+</Gaps>

@@ -1,0 +1,95 @@
+---
+title: Organisations
+description: Who exists in the insurance value chain, what each is incentivised to do, and which system boundary they sit on.
+sidebar:
+  order: 1
+status: draft
+sources:
+  - Author synthesis — REQUIRES REVIEW
+---
+
+import Ledger from '@components/Ledger.astro';
+import LedgerRow from '@components/LedgerRow.astro';
+import Eg from '@components/Eg.astro';
+import SystemsNote from '@components/SystemsNote.astro';
+import Gaps from '@components/Gaps.astro';
+
+The industry is a chain of distinct organisation types, and software boundaries map closely
+onto the boundaries between them. Every one of these is a party in your system — see
+[the domain model](/systems/domain-model/) for why that matters.
+
+<Ledger>
+  <LedgerRow term="Insurers (carriers)">
+    Take on the risk and pay the claims. Everything else in the chain orbits them.
+    <Eg>Allianz, AXA, Chubb; in India LIC, ICICI Lombard, HDFC ERGO, New India Assurance, Star Health.</Eg>
+  </LedgerRow>
+  <LedgerRow term="Reinsurers">
+    Insure the insurers, so a catastrophe doesn't sink any one balance sheet.
+    <Eg>Munich Re, Swiss Re, Hannover Re, Lloyd's syndicates; in India GIC Re.</Eg>
+  </LedgerRow>
+  <LedgerRow term="Brokers">
+    Represent the **customer**. They shop the market and negotiate terms — dominant in
+    commercial insurance.
+    <Eg>Marsh McLennan, Aon, WTW, Gallagher.</Eg>
+  </LedgerRow>
+  <LedgerRow term="Agents">
+    Represent the **insurer**. Tied agents sell for one carrier, independent agents for several.
+    Dominant in personal lines and Indian life insurance.
+  </LedgerRow>
+  <LedgerRow term="MGAs / MGUs">
+    Intermediaries with **delegated underwriting authority** — they underwrite and issue on a
+    carrier's behalf, often in niches like cyber or marine. Fast-growing and integration-hungry.
+  </LedgerRow>
+  <LedgerRow term="TPAs">
+    Third-Party Administrators handle claims or policy admin for the insurer — the backbone of
+    Indian health claims.
+  </LedgerRow>
+  <LedgerRow term="Lloyd's of London">
+    Not an insurer but a **marketplace**, where syndicates underwrite specialty and large
+    commercial risks via Lloyd's brokers. Central to marine, aviation, energy and cyber.
+  </LedgerRow>
+  <LedgerRow term="Regulators">
+    Approve products, mandate solvency capital, police conduct. Compliance drives a large share
+    of system functionality.
+    <Eg>IRDAI (India), NAIC and state DOIs (US), FCA/PRA (UK), EIOPA (EU).</Eg>
+  </LedgerRow>
+  <LedgerRow term="Loss adjusters / Surveyors">
+    Independent professionals who investigate and quantify claims — mandatory above certain
+    thresholds for many Indian general claims.
+  </LedgerRow>
+  <LedgerRow term="InsurTechs">
+    Tech-first entrants: full-stack digital insurers, distribution platforms, and enablers
+    selling technology to incumbents.
+    <Eg>Lemonade; in India Acko, Digit, Policybazaar, Turtlemint.</Eg>
+  </LedgerRow>
+  <LedgerRow term="Data & analytics providers">
+    Rating content, risk data, property intelligence and catastrophe models feeding underwriting
+    and pricing.
+    <Eg>Verisk/ISO, LexisNexis Risk, CoreLogic, Moody's RMS.</Eg>
+  </LedgerRow>
+  <LedgerRow term="ACORD">
+    The global standards body for insurance data exchange — forms plus AL3/XML/JSON standards.
+    You will meet ACORD in nearly every broker–carrier integration.
+  </LedgerRow>
+</Ledger>
+
+<SystemsNote>
+Each organisation boundary is an **integration boundary with a different trust model**, and
+that difference should be explicit in your design:
+
+- A **broker** submits risk data you must validate — they act for the customer, not for you.
+- An **MGA** writes business *on your paper* under delegated authority. They are not a data
+  source; they are exercising your underwriting rights. That means authority limits, bordereaux
+  ingestion, and after-the-fact audit rather than real-time validation.
+- A **TPA** makes claim decisions on your behalf, so your reserve and payment data originates
+  outside your walls and arrives on their schedule.
+
+The common modelling error is treating all three as "external partner" with one API pattern.
+</SystemsNote>
+
+<Gaps>
+- MGAs and delegated authority are called out in the content plan as high-value and badly
+  documented elsewhere. This page gives them three lines. They need their own chapter.
+- No treatment of what an ACORD message actually looks like.
+- Named examples carry no `verified:` date and no citation.
+</Gaps>

@@ -1,0 +1,92 @@
+---
+import { chainSteps } from '../data/value-chain';
+
+interface Props {
+  /** Matches ChainStep.slug — the page renders its own canonical entry. */
+  slug: string;
+}
+const { slug } = Astro.props;
+const step = chainSteps.find((s) => s.slug === slug);
+
+// Fail the build rather than silently rendering an empty chapter head.
+if (!step) {
+  throw new Error(
+    `ChainSummary: no value-chain step with slug "${slug}". ` +
+      `Known slugs: ${chainSteps.map((s) => s.slug).join(', ')}`
+  );
+}
+
+const index = chainSteps.indexOf(step);
+---
+
+<p class="lede">{step.summary}</p>
+
+<ol class="substeps">
+  {step.steps.map((s) => <li>{s}</li>)}
+</ol>
+
+<aside class="ex">
+  <span class="kicker">Example</span>
+  {step.example}
+</aside>
+
+<aside class="sys">
+  <span class="kicker">What this means for your system</span>
+  {step.sys}
+</aside>
+
+<p class="pos">
+  Step {index + 1} of {chainSteps.length} in the value chain.
+</p>
+
+<style>
+  .lede {
+    font-size: 1.05rem;
+    color: var(--ledger-body);
+  }
+  .substeps {
+    margin: 1rem 0;
+    padding-left: 1.15rem;
+    color: var(--ledger-body);
+  }
+  .substeps li {
+    margin: 0.25rem 0;
+  }
+  .ex,
+  .sys {
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    margin: 1.1rem 0;
+    font-size: 0.9rem;
+    color: var(--ledger-body);
+  }
+  .ex {
+    border: 1px solid var(--ledger-green);
+    border-left-width: 3px;
+    background: color-mix(in srgb, var(--ledger-green) 6%, transparent);
+  }
+  .sys {
+    border: 1.5px solid var(--ledger-heading);
+  }
+  .kicker {
+    display: block;
+    margin-bottom: 0.28rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .ex .kicker {
+    color: var(--ledger-green);
+  }
+  .sys .kicker {
+    color: var(--ledger-heading);
+  }
+  .pos {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ledger-quiet);
+  }
+</style>

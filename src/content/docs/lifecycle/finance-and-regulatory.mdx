@@ -1,0 +1,31 @@
+---
+title: Finance and Regulatory
+description: Reserving, solvency and IFRS 17 — the layer every core system ultimately feeds.
+sidebar:
+  order: 8
+status: draft
+sources:
+  - Author synthesis — REQUIRES REVIEW
+---
+
+import ChainSummary from '@components/ChainSummary.astro';
+import Gaps from '@components/Gaps.astro';
+
+<ChainSummary slug="lifecycle/finance-and-regulatory" />
+
+## Data lineage is a functional requirement
+
+This is the layer where "the system produces the right answer" stops being sufficient. A
+solvency return or an IFRS 17 disclosure must be **defensible**: you have to show which
+transactions produced a figure, under which product and rate versions, and reproduce it months
+later after the underlying policies have moved on.
+
+That requirement propagates backwards into every system feeding it. It is far cheaper to design
+for than to retrofit.
+
+<Gaps>
+- Reserving mechanics — chain ladder — are the promised content and are absent. The content plan
+  scopes this as "well enough to justify data requirements", which is still more than nothing.
+- IFRS 17's specific data demands (cohorts, CSM) are named without explanation.
+- Solvency regimes across India/EU/US are listed, not contrasted.
+</Gaps>

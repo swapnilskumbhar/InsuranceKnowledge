@@ -1,0 +1,119 @@
+---
+interface Props {
+  eyebrow?: string;
+  heading: string;
+  /** Key/value cells, rendered as a declarations-page grid. */
+  cells: { k: string; v: string }[];
+  /** Rubber-stamp text, e.g. "UNDERWRITTEN". Omit for no stamp. */
+  stamp?: string;
+}
+const { eyebrow = 'Declarations Page', heading, cells, stamp } = Astro.props;
+---
+
+<div class="decl">
+  <div class="eyebrow">{eyebrow}</div>
+  <h2>{heading}</h2>
+  <div class="decl-grid">
+    {
+      cells.map((c) => (
+        <div class="cell">
+          <div class="k">{c.k}</div>
+          <div class="v" set:html={c.v} />
+        </div>
+      ))
+    }
+  </div>
+  {stamp && <div class="stamp">{stamp}</div>}
+</div>
+
+<style>
+  .decl {
+    border: 1.5px solid var(--ledger-heading);
+    border-radius: 10px;
+    background: var(--ledger-surface);
+    padding: 1.9rem 2rem;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  /* The inner hairline is the printed border of a real declarations page. */
+  .decl::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px solid var(--ledger-border);
+    border-radius: 6px;
+    pointer-events: none;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ledger-quiet);
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 4vw, 2.35rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0.5rem 0 1.1rem;
+    color: var(--ledger-heading);
+    border: 0;
+  }
+  .decl-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+    border-top: 1px solid var(--ledger-border);
+  }
+  .cell {
+    padding: 0.75rem 0.9rem 0.75rem 0;
+    border-bottom: 1px solid var(--ledger-border);
+  }
+  .k {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ledger-quiet);
+  }
+  .v {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    margin-top: 0.15rem;
+    color: var(--ledger-body);
+  }
+  .stamp {
+    position: absolute;
+    right: 1.6rem;
+    bottom: 1.4rem;
+    transform: rotate(-11deg);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 0.8125rem;
+    letter-spacing: 0.22em;
+    color: var(--seal);
+    border: 2.5px solid var(--seal);
+    border-radius: 6px;
+    padding: 0.45rem 0.8rem;
+    opacity: 0.85;
+    animation: stampin 0.5s cubic-bezier(0.2, 1.6, 0.4, 1) 0.35s backwards;
+  }
+  @keyframes stampin {
+    from {
+      opacity: 0;
+      transform: rotate(-11deg) scale(2);
+    }
+    to {
+      opacity: 0.85;
+      transform: rotate(-11deg) scale(1);
+    }
+  }
+  /* The stamp overlaps content on narrow screens — drop it rather than let it
+     collide with the last declarations cell. */
+  @media (max-width: 560px) {
+    .stamp {
+      display: none;
+    }
+  }
+</style>

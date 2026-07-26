@@ -1,0 +1,32 @@
+---
+title: Claims
+description: FNOL to settlement to recovery — and why reserves are an event stream rather than a column.
+sidebar:
+  order: 6
+status: draft
+sources:
+  - Author synthesis — REQUIRES REVIEW
+---
+
+import ChainSummary from '@components/ChainSummary.astro';
+import Gaps from '@components/Gaps.astro';
+
+<ChainSummary slug="lifecycle/claims" />
+
+## Reserves are an event stream
+
+A reserve is not the claim's current estimated cost. It is **the history of every estimate ever
+made**, each with the date it was set and the reason it changed.
+
+Finance needs the movement between two dates, not the latest figure. Actuaries need the
+development pattern — how estimates on claims of this type evolve from first notice to close —
+because that pattern is what produces next year's IBNR. A schema storing `reserve_amount` as a
+mutable column destroys both, and the loss is not recoverable after the fact.
+
+<Gaps>
+- The reserve-movement data model is asserted here and not drawn. The content plan promises it;
+  `systems/claims-architecture` is where it belongs and does not exist.
+- Coverage verification — the step where the policy's effective-dated state at date of loss is
+  resolved — is the most system-relevant part of claims and is one bullet.
+- No document checklist, no line-specific divergence (motor garage networks, health cashless).
+</Gaps>

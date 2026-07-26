@@ -1,0 +1,68 @@
+---
+title: Life
+description: Term, endowment, ULIPs, annuities and group — benefit contracts rather than indemnity, and policies that outlive their systems.
+sidebar:
+  order: 4
+status: draft
+sources:
+  - Author synthesis — REQUIRES REVIEW
+---
+
+import Accordion from '@components/Accordion.astro';
+import Example from '@components/Example.astro';
+import SystemsNote from '@components/SystemsNote.astro';
+import Gaps from '@components/Gaps.astro';
+
+Life is the exception to indemnity: these are **benefit contracts**, paying an agreed sum rather
+than restoring a loss.
+
+<Accordion title="Term Life" tag="Term">
+Pure protection: if the insured dies during the term, beneficiaries receive the sum assured; no
+maturity value. The cheapest form of life cover. Underwriting weighs health, lifestyle, and
+**financial underwriting** — does the sum assured make sense against income?
+
+<Example>
+A 32-year-old buys ₹1 crore of term cover. Death in year 5 → the nominee receives ₹1 crore.
+Survive the 30-year term → nothing is paid. That is the deal, and why it is cheap.
+</Example>
+</Accordion>
+
+<Accordion title="Whole Life, Endowment & Money-Back" tag="Savings">
+Insurance plus savings. **Whole life** covers the entire lifetime and builds cash value.
+**Endowment** pays sum assured plus bonuses at maturity or earlier death; **money-back**
+variants pay periodic installments. **Participating** policies share insurer surplus as
+bonuses; **non-par** products carry guaranteed benefits.
+</Accordion>
+
+<Accordion title="ULIPs" tag="ULIP">
+Unit-Linked Insurance Plans: premium buys units in customer-chosen funds, with life cover on
+top. NAV calculation, fund switches and partial withdrawals make ULIP administration
+system-heavy — closer to asset management than to classic insurance.
+</Accordion>
+
+<Accordion title="Annuities & Pension" tag="Pension">
+The reverse of life insurance: the customer accumulates a corpus and the insurer pays a
+guaranteed income for life. The actuarial challenge is **longevity risk** — people living
+longer than priced.
+</Accordion>
+
+<Accordion title="Group Life & Credit Life" tag="Group">
+Employer-provided term cover for employees; **credit life** pays off a loan balance if the
+borrower dies — a bancassurance staple sold alongside home loans.
+</Accordion>
+
+<SystemsNote>
+**A life policy outlives multiple system generations.** An endowment sold in 1998 must still pay
+its maturity in 2028, with its bonus history intact, after three core-system migrations.
+
+This makes data migration and closed-book administration perennial programmes rather than
+one-off projects, and it means the retention requirement on life data is measured in decades,
+not years.
+</SystemsNote>
+
+<Gaps>
+- Bonus declaration and accrual for participating policies is the hardest data problem in life
+  administration and is not covered.
+- ULIP unit accounting — NAV, allocation, switches — is named without being modelled.
+- No worked premium or surrender-value calculation anywhere.
+</Gaps>

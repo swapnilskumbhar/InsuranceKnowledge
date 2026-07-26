@@ -1,0 +1,47 @@
+---
+interface Props {
+  /** The term being defined — rendered in the left rule. */
+  term: string;
+}
+const { term } = Astro.props;
+---
+
+<div class="row">
+  <div class="t">{term}</div>
+  <div class="d"><slot /></div>
+</div>
+
+<style>
+  .row {
+    display: grid;
+    grid-template-columns: 190px 1fr;
+    border-bottom: 1px solid var(--ledger-border);
+  }
+  .row:last-child {
+    border-bottom: 0;
+  }
+  .t {
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.7rem 1rem;
+    background: var(--ledger-surface-alt);
+    border-right: 1px solid var(--ledger-border);
+    color: var(--ledger-heading);
+  }
+  .d {
+    font-size: 0.875rem;
+    padding: 0.7rem 1rem;
+    color: var(--ledger-body);
+  }
+  /* Stack on narrow screens — the two-column rule becomes a dashed divider so
+     the term/definition pairing is still legible. */
+  @media (max-width: 640px) {
+    .row {
+      grid-template-columns: 1fr;
+    }
+    .t {
+      border-right: 0;
+      border-bottom: 1px dashed var(--ledger-border);
+    }
+  }
+</style>

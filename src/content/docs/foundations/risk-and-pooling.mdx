@@ -1,0 +1,53 @@
+---
+title: Risk and Pooling
+description: Why insurance works at all, why premium is a forecast rather than a price, and what that makes of your rating tables.
+sidebar:
+  order: 1
+status: draft
+sources:
+  - Author synthesis — REQUIRES REVIEW
+---
+
+import Example from '@components/Example.astro';
+import SystemsNote from '@components/SystemsNote.astro';
+import Gaps from '@components/Gaps.astro';
+
+**Insurance is risk transfer.** A person or business that cannot absorb a large loss pays a
+small, certain **premium** to an insurer who can — because the insurer pools thousands of
+similar risks. The **law of large numbers** makes losses predictable across the pool even
+though any single loss is not.
+
+<Example label="Worked example">
+10,000 car owners each pay a ₹10,000 premium → a ₹10 crore pool. In a typical year around
+300 of them claim, averaging ₹2.5 lakh each → ₹7.5 crore in losses. The remaining ₹2.5 crore
+covers commissions, operations, reinsurance and profit.
+
+No single owner could absorb a ₹2.5 lakh loss comfortably; the pool absorbs 300 of them
+predictably. *(Illustrative figures.)*
+</Example>
+
+## Premium is a forecast, not a price
+
+The number above — 300 claims at ₹2.5 lakh — is an *estimate made before the year happens*.
+Everything downstream inherits that fact. A price is something you look up. A forecast is
+something you version, revise, and later reconcile against what actually occurred.
+
+This is the difference that most system designs get wrong on the first attempt.
+
+<SystemsNote>
+Because premium is a forecast, **rating tables are versioned data, not configuration**. You
+need to answer "what rate did we charge this policy, on this date, under which filed
+version" years after the fact — for regulators, for disputes, and for the actuaries
+re-estimating next year's rates from last year's experience.
+
+A rate table stored as a current-state lookup destroys exactly the history that makes the
+next forecast possible.
+</SystemsNote>
+
+<Gaps>
+- The arithmetic above stops at the pool. It does not derive an individual premium — no base
+  rate, no loading, no expense allowance. That derivation belongs here.
+- No treatment of adverse selection or moral hazard, both of which change what data you must
+  capture at proposal.
+- Needs a primary source for the law-of-large-numbers framing rather than author synthesis.
+</Gaps>

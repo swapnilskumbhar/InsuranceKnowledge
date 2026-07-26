@@ -1,0 +1,42 @@
+---
+interface Props {
+  /** Label shown in the kicker. Use "Worked example" only when the arithmetic
+   *  is shown in full and a reader can reproduce it — that is editorial rule 4. */
+  label?: string;
+}
+const { label = 'Example' } = Astro.props;
+---
+
+<aside class="exbox">
+  <span class="kicker">{label}</span>
+  <div class="body"><slot /></div>
+</aside>
+
+<style>
+  .exbox {
+    border: 1px solid var(--ledger-green);
+    border-left-width: 3px;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--ledger-green) 6%, var(--ledger-surface));
+    padding: 0.85rem 1rem;
+    margin: 1.1rem 0;
+    font-size: 0.9rem;
+    color: var(--ledger-body);
+  }
+  .kicker {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ledger-green);
+  }
+  .body :global(> :last-child) {
+    margin-bottom: 0;
+  }
+  .body :global(table) {
+    margin: 0.6rem 0 0;
+    font-size: 0.8125rem;
+  }
+</style>

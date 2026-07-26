@@ -1,0 +1,54 @@
+---
+title: The Policy Contract
+description: The anatomy of a policy document, section by section, and how that anatomy becomes the shape of the policy aggregate.
+sidebar:
+  order: 2
+status: draft
+sources:
+  - Author synthesis — REQUIRES REVIEW
+---
+
+import Ledger from '@components/Ledger.astro';
+import LedgerRow from '@components/LedgerRow.astro';
+import Eg from '@components/Eg.astro';
+import SystemsNote from '@components/SystemsNote.astro';
+import Gaps from '@components/Gaps.astro';
+
+The **policy** is the legal contract. Four parts, and your users will see them named this way
+on the document, so name them this way in your system too.
+
+<Ledger>
+  <LedgerRow term="Declarations page">
+    Who and what is covered, the limits, the period, and the premium. The summary page a
+    policyholder actually reads.
+    <Eg>a motor schedule showing the registration number, IDV, period of insurance and premium.</Eg>
+  </LedgerRow>
+  <LedgerRow term="Insuring agreement">
+    The promise itself — what the insurer will do when a covered event occurs.
+  </LedgerRow>
+  <LedgerRow term="Exclusions">
+    What is not covered. The section that generates the most claim disputes, and therefore the
+    section your claim decisioning logic spends the most time in.
+    <Eg>hydrostatic lock is excluded from standard motor own-damage cover — it needs an add-on.</Eg>
+  </LedgerRow>
+  <LedgerRow term="Conditions">
+    Obligations on both sides — notification deadlines, duty to minimise loss, cancellation rights.
+  </LedgerRow>
+</Ledger>
+
+<SystemsNote>
+The document's four sections do **not** map to four tables. Declarations are the *current
+state of a time-varying aggregate*; the insuring agreement and exclusions belong to the
+**product version** the policy was written on, not to the policy row.
+
+Copying wording text onto each policy record is the common shortcut. It works until the first
+mid-term endorsement, at which point you cannot say which wording version was in force on the
+date of loss — which is the only question a claims decision actually needs answered.
+</SystemsNote>
+
+<Gaps>
+- No worked example of a real schedule, field by field. The `_TEMPLATE.md` contract asks for one.
+- Nothing yet on how wording versions are filed and referenced — that belongs here and links to
+  `systems/product-configuration`.
+- India/US/UK naming differences (schedule vs declarations page) are unwritten.
+</Gaps>

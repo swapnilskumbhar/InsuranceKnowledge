@@ -1,0 +1,74 @@
+---
+title: Personal Lines
+description: Motor, home, travel and personal accident — high volume, thin margins, and the lines where straight-through processing decides the economics.
+sidebar:
+  order: 1
+status: draft
+sources:
+  - Author synthesis — REQUIRES REVIEW
+---
+
+import Accordion from '@components/Accordion.astro';
+import Example from '@components/Example.astro';
+import Gaps from '@components/Gaps.astro';
+
+Overview pages. Per the content plan, **Motor (India)** and **Health (India)** are the two
+lines slated for full `_TEMPLATE.md` treatment — nine sections each, with a worked quote to the
+final rupee. Neither exists yet; what follows is orientation only.
+
+<Accordion title="Motor / Auto Insurance" tag="Motor">
+The largest general line in most markets, including India. Two components: **third-party
+liability** (injury or damage you cause others — legally mandatory in India under the Motor
+Vehicles Act) and **own damage** (your vehicle — accident, theft, fire, flood).
+
+Pricing uses vehicle make and model, geography, and claims history; the **No Claim Bonus** is
+the big retention lever. Claims run through garage networks, cashless repair, surveyors and
+depreciation rules. High volume and thin margins make this the line where straight-through
+processing matters most.
+
+<Example>
+A comprehensive policy on a recent hatchback with 20% No Claim Bonus. Monsoon floods seize the
+engine — payable only because the owner bought the engine-protection add-on; standard
+own-damage cover excludes hydrostatic lock.
+</Example>
+</Accordion>
+
+<Accordion title="Home / Householders / Personal Property" tag="Home">
+Covers building structure and/or contents against fire, natural catastrophe and burglary, often
+with liability add-ons. Sum insured is based on **reconstruction cost, not market value** —
+underinsurance is chronic. Catastrophe exposure makes reinsurance and accumulation management
+critical.
+
+<Example>
+A flat insured for ₹60 lakh reconstruction cost plus ₹8 lakh contents. A burglary claim for
+jewellery pays out — but only up to the jewellery sub-limit, a detail most customers discover
+at claim time. *(Illustrative figures.)*
+</Example>
+</Accordion>
+
+<Accordion title="Travel Insurance" tag="Travel">
+Short-duration cover for trip cancellation, overseas medical emergencies, baggage and delays.
+Almost entirely digital and **embedded** — sold with tickets and visas. High volume, low
+premium, automated claims: a favourite line for insurtech and API-first distribution.
+
+<Example>
+A flight lands eight hours late; the insurer detects it from airline data and auto-pays the
+fixed delay benefit before the traveller files a claim — near-parametric claims handling.
+</Example>
+</Accordion>
+
+<Accordion title="Personal Accident" tag="PA">
+Fixed benefits for accidental death or disability — lump sums or weekly benefits. Simple
+product, widely bundled and sold through banks and employers.
+</Accordion>
+
+<Gaps>
+- **No worked quote anywhere on this page.** The `_TEMPLATE.md` contract requires base rate →
+  zone → NCB → add-ons → tax, to the final rupee, with each factor labelled regulator-set or
+  insurer-set. That is the single most valuable thing missing.
+- No document sets, no underwriting rules, no referral thresholds.
+- Motor deserves its own page (`motor-india`) at full template depth. This summary is a
+  placeholder for it.
+- Regulatory claims (Motor Vehicles Act mandate, Bharat Griha Raksha) carry no citation and no
+  `verified:` date.
+</Gaps>

@@ -1,0 +1,49 @@
+---
+title: Policy Servicing
+description: Endorsements, cancellations, renewals — and the out-of-sequence problem that defines policy administration design.
+sidebar:
+  order: 4
+status: draft
+sources:
+  - Author synthesis — REQUIRES REVIEW
+---
+
+import ChainSummary from '@components/ChainSummary.astro';
+import Example from '@components/Example.astro';
+import Gaps from '@components/Gaps.astro';
+
+<ChainSummary slug="lifecycle/policy-servicing" />
+
+## The out-of-sequence problem
+
+This is the chapter the content plan flags as the hard one, and it deserves the space.
+
+An endorsement is not "an update to the policy." It is a **change with its own effective date**,
+which may be earlier than changes already processed. When that happens, everything after it has
+to be recomputed — premium, commission, earned/unearned splits, and any reinsurance cession
+that depended on the sum insured.
+
+<Example label="The shape of the problem">
+A policy runs 1 Jan – 31 Dec. On 15 June an endorsement raises the sum insured, effective
+1 July. On 20 June a second endorsement arrives — **effective 1 March** — changing the insured
+address to a higher-rated zone.
+
+The second endorsement is earlier than the first but processed after it. The system must
+re-rate the 1 March–1 July window at the new zone, then re-apply the 1 July sum-insured change
+on top of the corrected base, and produce a premium adjustment that nets against what was
+already billed.
+
+*This example states the problem. The full arithmetic — and the data structure that makes it
+tractable — is the work this page still needs.*
+</Example>
+
+<Gaps>
+- **The worked arithmetic is missing.** The example above describes the scenario without
+  computing it. Editorial rule 4 requires real numbers a reader can reproduce; this page does
+  not yet meet its own standard.
+- The data structure that makes out-of-sequence tractable belongs in `systems/effective-dating`,
+  which is not written.
+- Cancellation methods (pro-rata versus short-rate) are named but not calculated.
+- Life-specific servicing — lapse, revival, policy loans, surrender — is one bullet and needs
+  its own treatment.
+</Gaps>

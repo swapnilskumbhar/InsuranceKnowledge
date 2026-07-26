@@ -1,0 +1,37 @@
+---
+title: Reinsurance Operations
+description: Cessions, recoveries and bordereaux — the most legacy-bound corner of most insurers.
+sidebar:
+  order: 7
+status: draft
+sources:
+  - Author synthesis — REQUIRES REVIEW
+---
+
+import ChainSummary from '@components/ChainSummary.astro';
+import Example from '@components/Example.astro';
+import Gaps from '@components/Gaps.astro';
+
+<ChainSummary slug="lifecycle/reinsurance-operations" />
+
+## Treaty and facultative
+
+**Treaty** reinsurance is automatic and portfolio-wide: agreed in advance, applied to every
+risk meeting the criteria. **Facultative** is negotiated per individual risk. Proportional
+structures (quota share, surplus) share premium and losses by a fixed proportion; non-
+proportional (excess of loss) responds only above an attachment point.
+
+<Example>
+An insurer accepts a ₹50 crore factory fire risk but wants only ₹5 crore on its own books: it
+retains ₹5 crore and cedes ₹45 crore under its surplus treaty. Separately, its catastrophe
+excess-of-loss treaty pays whenever a single event costs the insurer more than ₹20 crore in
+total claims. *(Illustrative figures.)*
+</Example>
+
+<Gaps>
+- Cession calculation is described in words, never computed. The interaction between an
+  endorsement that changes sum insured and an already-reported cession is the interesting case
+  and is absent.
+- Bordereaux formats are named but not shown.
+- Nothing on accumulation tracking, which is the reason exposure management exists.
+</Gaps>

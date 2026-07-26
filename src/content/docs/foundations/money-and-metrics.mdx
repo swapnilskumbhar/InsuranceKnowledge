@@ -1,0 +1,68 @@
+---
+title: Money and Metrics
+description: Earned and unearned premium, reserves, combined ratio — and why the ledger and the policy system disagree.
+sidebar:
+  order: 4
+status: draft
+sources:
+  - Author synthesis — REQUIRES REVIEW
+---
+
+import Ledger from '@components/Ledger.astro';
+import LedgerRow from '@components/LedgerRow.astro';
+import Eg from '@components/Eg.astro';
+import Example from '@components/Example.astro';
+import SystemsNote from '@components/SystemsNote.astro';
+import Gaps from '@components/Gaps.astro';
+
+The metrics architects get asked about in the first week, and misuse for a year afterwards.
+
+<Ledger>
+  <LedgerRow term="Loss ratio">
+    Claims ÷ earned premium. The core measure of underwriting quality.
+  </LedgerRow>
+  <LedgerRow term="Expense ratio">
+    Operating expenses and commissions ÷ premium.
+  </LedgerRow>
+  <LedgerRow term="Combined ratio">
+    Loss ratio + expense ratio. Below 100% means an underwriting profit.
+  </LedgerRow>
+  <LedgerRow term="GWP / NWP">
+    Gross versus Net Written Premium — net is after reinsurance cessions.
+  </LedgerRow>
+  <LedgerRow term="Earned vs unearned">
+    Premium is earned gradually across the policy period; the unearned part sits as a liability.
+    <Eg>six months into an annual policy, half the premium is earned and half is still owed back if the policy cancels.</Eg>
+  </LedgerRow>
+  <LedgerRow term="Reserves & IBNR">
+    Money held for open claims — including those Incurred But Not Reported yet.
+    <Eg>a December accident claimed in February still belongs to last year's accounts; IBNR estimates it in advance.</Eg>
+  </LedgerRow>
+</Ledger>
+
+<Example label="Worked example">
+Earned premium ₹1,000 cr; claims ₹620 cr → loss ratio **62%**. Expenses and commissions
+₹300 cr → expense ratio **30%**. Combined ratio **92%** → an underwriting profit of 8 paise
+per premium rupee, before investment income. *(Illustrative figures.)*
+</Example>
+
+<SystemsNote>
+**The ledger and the policy system will disagree, and this is not a bug.** The policy system
+knows written premium at the moment of a transaction. Finance needs premium *earned across
+time*, restated whenever an endorsement changes the policy retroactively.
+
+Two consequences worth designing for on day one:
+
+1. Earning is a **function of the policy's effective-dated state**, not a stored number. An
+   out-of-sequence endorsement changes what was earned in a period you have already closed.
+2. You need a defensible answer to "which system is right." Usually the policy system is the
+   source of truth for *what was agreed* and finance is authoritative for *what was recognised*
+   — and the reconciliation between them is a first-class feature, not a report someone writes
+   later.
+</SystemsNote>
+
+<Gaps>
+- No treatment of the actual earning methods (pro-rata, 24ths, 365ths) and where they differ.
+- Reserving mechanics — chain ladder — are referenced in the content plan but not written.
+- Nothing on IFRS 17's data demands, which is where this material becomes urgent.
+</Gaps>

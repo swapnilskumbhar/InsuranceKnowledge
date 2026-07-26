@@ -1,0 +1,59 @@
+---
+title: Insurance Domain Handbook
+description: Insurance domain knowledge for the people who build the systems.
+template: splash
+# Without this the tab reads "Insurance Domain Handbook | Insurance Domain Handbook",
+# because Starlight appends the site title to the page title.
+head:
+  - tag: title
+    content: Insurance Domain Handbook
+---
+
+import Declarations from '@components/Declarations.astro';
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<Declarations
+  heading="Where the contract meets the schema"
+  stamp="IN FORCE"
+  cells={[
+    { k: 'Covers', v: 'Domain knowledge for people who build insurance systems' },
+    { k: 'Territory', v: 'India first, with US &amp; UK contrasts' },
+    { k: 'Insuring agreement', v: 'Every page answers what a practitioner does — and what that means for the system' },
+    { k: 'Exclusions', v: 'General primers · exhaustive LOB coverage · actuarial rigour' },
+    { k: 'Conditions', v: 'Every factual claim carries a source; every figure is labelled' },
+    { k: 'Status', v: 'Draft throughout — not reviewed by a practitioner' },
+  ]}
+/>
+
+:::caution[Read this before relying on anything here]
+Every page in this handbook is currently **draft, largely author synthesis, and unreviewed**.
+India-specific regulatory material is the least safe to trust. Nothing here should be published
+under anyone's name until a practising insurance professional has reviewed it.
+
+Pages carry a **Known gaps** panel stating what they do not yet contain. Those panels are
+accurate and worth reading first.
+:::
+
+<CardGrid>
+  <Card title="Not another primer" icon="open-book">
+    The III teaches insurance to insurance people. Guidewire teaches its platform.
+    This connects domain concepts to modelling consequences.
+  </Card>
+  <Card title="Two questions per page" icon="puzzle">
+    What does a practitioner actually do — and what does that mean for your system?
+  </Card>
+  <Card title="Depth over breadth" icon="magnifier">
+    Two lines of business covered properly beats twelve covered shallowly.
+  </Card>
+  <Card title="Sourced, or labelled" icon="approve-check">
+    Every factual claim carries a source. Every figure is marked illustrative or sourced.
+  </Card>
+</CardGrid>
+
+## Where to start
+
+- **[The domain model](./systems/domain-model/)** — the six entities every policy system
+  converges on. The most developed chapter, and the one that shows the format working.
+- **[The value chain](./lifecycle/overview/)** — the eight processes, with an interactive
+  explorer.
+- **[Glossary](./reference/glossary/)** — every term with a concrete example attached.

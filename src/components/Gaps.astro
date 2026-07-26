@@ -1,0 +1,42 @@
+---
+/**
+ * Gaps — what this page does not yet contain.
+ *
+ * Deliberately visible rather than a TODO comment. A page that is honest about
+ * being thin is useful; a page that reads as finished while being one paragraph
+ * deep is the failure mode this handbook exists to avoid.
+ */
+---
+
+<aside class="gaps">
+  <span class="kicker">Known gaps</span>
+  <div class="body"><slot /></div>
+</aside>
+
+<style>
+  .gaps {
+    border: 1px dashed var(--seal);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--seal) 5%, transparent);
+    padding: 0.85rem 1rem;
+    margin: 1.5rem 0;
+    font-size: 0.875rem;
+    color: var(--ledger-body);
+  }
+  .kicker {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--seal);
+  }
+  .body :global(> :last-child) {
+    margin-bottom: 0;
+  }
+  .body :global(ul) {
+    margin: 0.2rem 0 0;
+    padding-left: 1.1rem;
+  }
+</style>

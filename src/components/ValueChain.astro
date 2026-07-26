@@ -1,0 +1,196 @@
+---
+import { chainSteps } from '../data/value-chain';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<div class="chain-explorer" data-chain>
+  <ol class="chain" role="tablist" aria-label="Value chain steps">
+    {
+      chainSteps.map((s, i) => (
+        <li>
+          <button
+            role="tab"
+            id={`chain-tab-${i}`}
+            aria-controls={`chain-panel-${i}`}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            class:list={['step', { 'is-on': i === 0 }]}
+            data-step={i}
+          >
+            <span class="idx">{String(i + 1).padStart(2, '0')}</span>
+            <span class="k">{s.key}</span>
+          </button>
+        </li>
+      ))
+    }
+  </ol>
+
+  {
+    chainSteps.map((s, i) => (
+      <section
+        role="tabpanel"
+        id={`chain-panel-${i}`}
+        aria-labelledby={`chain-tab-${i}`}
+        class="panel"
+        data-panel={i}
+        hidden={i !== 0}
+      >
+        <h3>{s.title}</h3>
+        <p class="summary">{s.summary}</p>
+        <ol class="substeps">
+          {s.steps.map((st) => (
+            <li>{st}</li>
+          ))}
+        </ol>
+        <div class="ex">
+          <span class="kicker">Example</span>
+          {s.example}
+        </div>
+        <div class="sys">
+          <span class="kicker">What this means for your system</span>
+          {s.sys}
+        </div>
+        <a class="more" href={`${base}/${s.slug}/`}>
+          Read the chapter →
+        </a>
+      </section>
+    ))
+  }
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-chain]').forEach((root) => {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[data-step]')];
+    const panels = [...root.querySelectorAll<HTMLElement>('[data-panel]')];
+
+    const select = (i: number) => {
+      tabs.forEach((t, j) => {
+        t.classList.toggle('is-on', i === j);
+        t.setAttribute('aria-selected', String(i === j));
+      });
+      panels.forEach((p, j) => {
+        p.hidden = i !== j;
+      });
+    };
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(i));
+      // Arrow-key navigation, per the WAI-ARIA tabs pattern.
+      tab.addEventListener('keydown', (e) => {
+        const delta = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!delta) return;
+        e.preventDefault();
+        const next = (i + delta + tabs.length) % tabs.length;
+        select(next);
+        tabs[next]?.focus();
+      });
+    });
+  });
+</script>
+
+<style>
+  .chain {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+  }
+  .chain li {
+    margin: 0;
+  }
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.8rem;
+    border: 1px solid var(--ledger-border);
+    border-radius: 20px;
+    background: var(--ledger-surface);
+    cursor: pointer;
+    color: var(--ledger-body);
+    font-size: 0.8125rem;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .step:hover {
+    border-color: var(--ledger-heading);
+  }
+  .step.is-on {
+    background: var(--ledger-heading);
+    border-color: var(--ledger-heading);
+    color: var(--ledger-surface);
+  }
+  .idx {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    opacity: 0.7;
+  }
+  .k {
+    font-weight: 500;
+  }
+
+  .panel {
+    border: 1px solid var(--ledger-border);
+    border-radius: 10px;
+    background: var(--ledger-surface);
+    padding: 1.15rem 1.35rem;
+  }
+  .panel h3 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    margin: 0 0 0.4rem;
+    border: 0;
+    padding: 0;
+    color: var(--ledger-heading);
+  }
+  .summary {
+    color: var(--ledger-body);
+    margin: 0 0 0.8rem;
+    font-size: 0.925rem;
+  }
+  .substeps {
+    margin: 0 0 1rem;
+    padding-left: 1.1rem;
+    font-size: 0.875rem;
+    color: var(--ledger-body);
+  }
+  .substeps li {
+    margin: 0.2rem 0;
+  }
+  .ex,
+  .sys {
+    border-radius: 8px;
+    padding: 0.7rem 0.9rem;
+    margin-bottom: 0.7rem;
+    font-size: 0.8625rem;
+    color: var(--ledger-body);
+  }
+  .ex {
+    border: 1px solid var(--ledger-green);
+    border-left-width: 3px;
+    background: color-mix(in srgb, var(--ledger-green) 6%, transparent);
+  }
+  .sys {
+    border: 1px solid var(--ledger-heading);
+    border-left-width: 3px;
+  }
+  .kicker {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .ex .kicker {
+    color: var(--ledger-green);
+  }
+  .sys .kicker {
+    color: var(--ledger-heading);
+  }
+  .more {
+    font-size: 0.8125rem;
+    color: var(--sl-color-text-accent);
+  }
+</style>

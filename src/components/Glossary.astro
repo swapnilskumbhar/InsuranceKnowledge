@@ -1,0 +1,212 @@
+---
+import { glossary, CATEGORIES } from '../data/glossary';
+
+// Sorted once at build time — the client only filters.
+const terms = [...glossary].sort((a, b) => a.term.localeCompare(b.term));
+const usedCategories = CATEGORIES.filter((c) => terms.some((t) => t.category === c));
+---
+
+<div class="glossary" data-glossary>
+  <div class="searchbar">
+    <span aria-hidden="true">🔍</span>
+    <input
+      type="search"
+      id="glossSearch"
+      placeholder="Search terms — try 'bordereaux' or 'FNOL'…"
+      aria-label="Search glossary terms"
+      autocomplete="off"
+    />
+    <span class="count" data-count>{terms.length} terms</span>
+  </div>
+
+  <div class="filters" role="group" aria-label="Filter by category">
+    <button class="chip is-on" data-cat="">All</button>
+    {usedCategories.map((c) => <button class="chip" data-cat={c}>{c}</button>)}
+  </div>
+
+  <div class="gloss-grid">
+    {
+      terms.map((t) => (
+        <article
+          class="term"
+          data-term={t.term.toLowerCase()}
+          data-def={t.definition.toLowerCase()}
+          data-cat={t.category}
+        >
+          <h3>
+            {t.term}
+            <span class="cat">{t.category}</span>
+          </h3>
+          <p class="def">{t.definition}</p>
+          <p class="eg">{t.eg}</p>
+          {t.seeAlso && (
+            <a class="see" href={`${import.meta.env.BASE_URL}${t.seeAlso}/`.replace(/\/{2,}/g, '/')}>
+              Read the chapter →
+            </a>
+          )}
+        </article>
+      ))
+    }
+  </div>
+
+  <p class="noresult" data-noresult hidden>No terms match — try a shorter search.</p>
+</div>
+
+<script>
+  // Progressive enhancement: without JS the full list still renders.
+  document.querySelectorAll<HTMLElement>('[data-glossary]').forEach((root) => {
+    const input = root.querySelector<HTMLInputElement>('#glossSearch');
+    const count = root.querySelector<HTMLElement>('[data-count]');
+    const noResult = root.querySelector<HTMLElement>('[data-noresult]');
+    const chips = [...root.querySelectorAll<HTMLButtonElement>('.chip')];
+    const terms = [...root.querySelectorAll<HTMLElement>('.term')];
+    let category = '';
+
+    const apply = () => {
+      const q = (input?.value ?? '').trim().toLowerCase();
+      let shown = 0;
+      for (const el of terms) {
+        const matchesText =
+          !q ||
+          (el.dataset.term ?? '').includes(q) ||
+          (el.dataset.def ?? '').includes(q);
+        const matchesCat = !category || el.dataset.cat === category;
+        const show = matchesText && matchesCat;
+        el.hidden = !show;
+        if (show) shown++;
+      }
+      if (count) count.textContent = `${shown} term${shown === 1 ? '' : 's'}`;
+      if (noResult) noResult.hidden = shown !== 0;
+    };
+
+    input?.addEventListener('input', apply);
+    chips.forEach((chip) =>
+      chip.addEventListener('click', () => {
+        category = chip.dataset.cat ?? '';
+        chips.forEach((c) => c.classList.toggle('is-on', c === chip));
+        apply();
+      })
+    );
+  });
+</script>
+
+<style>
+  .searchbar {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    border: 1px solid var(--ledger-border);
+    border-radius: 10px;
+    background: var(--ledger-surface);
+    padding: 0.6rem 0.9rem;
+    margin: 1rem 0 0.75rem;
+  }
+  .searchbar input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: var(--ledger-heading);
+    outline: none;
+  }
+  .count {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ledger-quiet);
+  }
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-bottom: 1.1rem;
+  }
+  .chip {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    padding: 0.3rem 0.65rem;
+    border-radius: 20px;
+    border: 1px solid var(--ledger-border);
+    background: none;
+    color: var(--ledger-quiet);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .chip:hover {
+    border-color: var(--ledger-heading);
+    color: var(--ledger-heading);
+  }
+  .chip.is-on {
+    background: var(--ledger-heading);
+    border-color: var(--ledger-heading);
+    color: var(--ledger-surface);
+  }
+
+  .gloss-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+    gap: 0.75rem;
+  }
+  .term {
+    border: 1px solid var(--ledger-border);
+    border-radius: 10px;
+    background: var(--ledger-surface);
+    padding: 0.85rem 1rem;
+  }
+  .term h3 {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    margin: 0 0 0.35rem;
+    border: 0;
+    padding: 0;
+    color: var(--ledger-heading);
+  }
+  .cat {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ledger-quiet);
+  }
+  .def {
+    font-size: 0.8375rem;
+    margin: 0;
+    color: var(--ledger-body);
+  }
+  .eg {
+    font-size: 0.8rem;
+    margin: 0.45rem 0 0;
+    padding-left: 0.6rem;
+    border-left: 2px solid var(--ledger-green);
+    color: var(--ledger-quiet);
+  }
+  .eg::before {
+    content: 'e.g. ';
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ledger-green);
+  }
+  .see {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--sl-color-text-accent);
+  }
+  .noresult {
+    text-align: center;
+    padding: 2rem 0;
+    color: var(--ledger-quiet);
+  }
+</style>

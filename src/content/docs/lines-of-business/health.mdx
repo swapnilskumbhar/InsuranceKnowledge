@@ -1,0 +1,43 @@
+---
+title: Health
+description: Cashless, TPAs, networks and pre-authorisation — the most integration-heavy line in the Indian market.
+sidebar:
+  order: 3
+status: draft
+sources:
+  - Author synthesis — REQUIRES REVIEW
+---
+
+import Example from '@components/Example.astro';
+import Gaps from '@components/Gaps.astro';
+
+Covers medical expenses: hospitalisation, day-care procedures, pre- and post-hospitalisation,
+and increasingly OPD and wellness.
+
+Two payout models: **indemnity** (reimburse actual bills — the family-floater mediclaim) and
+**fixed benefit** (a lump sum on diagnosis — critical illness, hospital cash).
+
+The mechanics that matter for systems: network hospitals and **cashless claims** settled
+directly with hospitals via TPA pre-authorisation, waiting periods for pre-existing diseases,
+sub-limits, co-pays and cumulative bonuses.
+
+<Example>
+A ₹10 lakh family floater: an appendectomy at a network hospital is pre-authorised by the TPA
+and settled cashless at ₹1.2 lakh. The same member's planned knee surgery in year one is
+declined — pre-existing condition, still inside the waiting period. *(Illustrative figures.)*
+</Example>
+
+:::caution[Different markets, different domains]
+**US health insurance is a different universe** — payers, providers, HIPAA, X12 EDI claims.
+Treat it as its own domain rather than assuming anything on this page transfers.
+:::
+
+<Gaps>
+- Health is one of the two lines the content plan slates for full template depth, and this page
+  is an overview. The cashless pre-authorisation flow — the most integration-heavy workflow in
+  Indian insurance — needs a full treatment with the TPA boundary drawn explicitly.
+- Waiting periods, sub-limits and co-pays interact in ways that break naive claim adjudication.
+  None of that interaction is worked here.
+- No worked premium calculation; no document set.
+- Every India-specific regulatory statement needs a `verified:` date.
+</Gaps>

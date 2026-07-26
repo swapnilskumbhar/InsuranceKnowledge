@@ -1,0 +1,87 @@
+---
+title: Core Platforms
+description: Guidewire, Duck Creek, Sapiens, TCS BaNCS and the rest — the system categories they occupy, and the axis to evaluate them on.
+sidebar:
+  order: 8
+status: draft
+sources:
+  - Vendor product documentation (public)
+  - Author synthesis — REQUIRES REVIEW
+---
+
+import Ledger from '@components/Ledger.astro';
+import LedgerRow from '@components/LedgerRow.astro';
+import SystemsNote from '@components/SystemsNote.astro';
+import Gaps from '@components/Gaps.astro';
+
+## Core system categories
+
+Before the vendor names, the categories. Insurance IT organises around a recognisable set of
+systems, and most vendor comparisons are really comparisons within one of these boxes.
+
+<Ledger>
+  <LedgerRow term="PAS">
+    Policy Administration System — product configuration, quoting, rating, underwriting
+    workflow, issuance, endorsements, renewals. "Core transformation" usually means replacing a
+    legacy PAS.
+  </LedgerRow>
+  <LedgerRow term="Claims system">
+    FNOL through settlement: reserves, payments, recoveries, litigation tracking.
+  </LedgerRow>
+  <LedgerRow term="Billing">
+    Invoicing, installments, commissions, dunning — complex enough to ship as its own module.
+  </LedgerRow>
+  <LedgerRow term="Rating engine">
+    Sometimes embedded, sometimes standalone so actuaries can change rates without a code release.
+  </LedgerRow>
+  <LedgerRow term="Underwriting workbench">
+    Commercial submission triage, data enrichment, exposure analysis.
+  </LedgerRow>
+  <LedgerRow term="Agency systems">
+    The broker and agent side of the integration surface.
+  </LedgerRow>
+  <LedgerRow term="Document / CCM">
+    Policy documents and correspondence generation.
+  </LedgerRow>
+  <LedgerRow term="Reinsurance admin">
+    Treaty and facultative administration, cessions and recoveries.
+  </LedgerRow>
+  <LedgerRow term="Fraud & analytics">
+    Fraud detection, plus the data warehouse and regulatory reporting stack every insurer runs.
+  </LedgerRow>
+</Ledger>
+
+## Vendors, for orientation
+
+| Vendor | Space | Note |
+|---|---|---|
+| Guidewire | P&C suite | PolicyCenter, ClaimCenter, BillingCenter. Large Indian delivery practices. |
+| Duck Creek | P&C suite | Policy, Claims, Billing, Rating; SaaS-first; strong in the US. |
+| Sapiens | P&C, Life, Re | Broad portfolio, strong EMEA presence, dedicated reinsurance product. |
+| Majesco | P&C + L&A | US mid-market strength, Indian development heritage. |
+| Socotra · EIS · BriteCore · Insurity | P&C / coretech | The newer API-first, cloud-native generation. |
+| TCS BaNCS | Life & GI (India) | Widely used in the Indian market. |
+| Infosys McCamish · DXC · FIS | Life & Annuities | Major L&A platforms; legacy platforms running large closed books. |
+| FINEOS · Vitech | Group / benefits | Claims and administration for life, group and employee benefits. |
+| Verisk / ISO | Data & content | Standard policy forms and rating content; catastrophe models. |
+| Salesforce FSC · Pega | CRM / BPM | The engagement and case-management layers around core systems. |
+
+<SystemsNote>
+The content plan says to compare these **on model, not marketing**, and the table above does not
+yet do that — it is an orientation list.
+
+The axis that actually distinguishes these platforms is **how much of the domain model is
+configuration versus code**: whether a new coverage is a config change or a release, whether
+rate tables are actuary-editable artefacts or developer-owned, and whether effective dating is
+a first-class primitive or something each implementation rebuilds.
+
+Feature-list comparisons will not tell you this. Reading each vendor's product model will.
+</SystemsNote>
+
+<Gaps>
+- **The model-level comparison is the whole point of this page and is not written.** What exists
+  is the marketing-level table the content plan explicitly warns against.
+- No treatment of how each platform represents policy versioning, which is the comparison that
+  would actually help a buyer.
+- Vendor claims need dating — this material goes stale fast.
+</Gaps>

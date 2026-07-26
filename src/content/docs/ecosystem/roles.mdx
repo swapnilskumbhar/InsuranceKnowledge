@@ -1,0 +1,80 @@
+---
+title: Roles
+description: The people your systems actually serve, what they do all day, and which screen they live in.
+sidebar:
+  order: 2
+status: draft
+sources:
+  - Author synthesis — REQUIRES REVIEW
+---
+
+import Ledger from '@components/Ledger.astro';
+import LedgerRow from '@components/LedgerRow.astro';
+import SystemsNote from '@components/SystemsNote.astro';
+import Gaps from '@components/Gaps.astro';
+
+<Ledger>
+  <LedgerRow term="Underwriter">
+    Evaluates submissions and decides accept/decline, price and terms. Largely automated in
+    personal lines; judgment-heavy in commercial. Lives in the PAS and the underwriting workbench.
+  </LedgerRow>
+  <LedgerRow term="Actuary">
+    Pricing actuaries build rating models; reserving actuaries estimate future claim costs;
+    others do capital modelling and filings. Massive consumers of core-system data.
+  </LedgerRow>
+  <LedgerRow term="Broker / Agent (producer)">
+    Sells and services policies — "producer" is the generic term. Their agency management systems
+    and portals are a large carrier integration surface.
+  </LedgerRow>
+  <LedgerRow term="Claims adjuster / handler">
+    From FNOL to settlement: verify coverage, investigate, set reserves, negotiate, pay. Field
+    adjusters inspect; desk adjusters work files remotely.
+  </LedgerRow>
+  <LedgerRow term="Risk engineer">
+    Inspects factories and commercial properties and recommends improvements; reports feed
+    underwriting decisions.
+  </LedgerRow>
+  <LedgerRow term="SIU / fraud investigator">
+    Special Investigation Unit — fraud detection and investigation. Fraud analytics is a
+    recurring software project.
+  </LedgerRow>
+  <LedgerRow term="Product manager">
+    Designs products: coverage structure, wording, pricing framework, regulatory filing. In
+    system terms, product configuration in the PAS.
+  </LedgerRow>
+  <LedgerRow term="Operations / policy servicing">
+    Back-office issuance, endorsements, renewals, cancellations and correspondence — the daily
+    users of your workflows.
+  </LedgerRow>
+  <LedgerRow term="Compliance & legal">
+    Keep products, sales and claims within regulation. Drive audit trail, retention and
+    reporting requirements.
+  </LedgerRow>
+  <LedgerRow term="Ceded reinsurance analyst">
+    Manages treaties, cessions and recoveries — often on legacy or manual tooling.
+  </LedgerRow>
+  <LedgerRow term="CAT modeller / exposure manager">
+    Tracks risk accumulation — total exposure in one earthquake zone, one port, one cyclone path
+    — using catastrophe models.
+  </LedgerRow>
+  <LedgerRow term="TPA claims processor">
+    Runs cashless pre-authorisations and reimbursement adjudication in health.
+  </LedgerRow>
+</Ledger>
+
+<SystemsNote>
+These roles are **not** a permission matrix, and modelling them as one is the mistake to avoid.
+The same human is an underwriter on one submission and a referral approver on another; a claims
+handler's authority is bounded by reserve amount, not by job title.
+
+Model **authority limits as data attached to the transaction type and amount**, with role as
+one input among several. Systems that hardcode "underwriter can approve" need a release every
+time the business changes a threshold.
+</SystemsNote>
+
+<Gaps>
+- No day-in-the-life detail for any role. Knowing an underwriter "evaluates submissions" does
+  not tell you what their screen needs.
+- Authority limits are asserted as the right model but not worked through with a concrete
+  referral example.
+</Gaps>

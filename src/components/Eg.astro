@@ -1,0 +1,29 @@
+---
+/**
+ * Eg — an inline concrete instance attached to a definition.
+ *
+ * Deliberately lightweight: it sits inside a LedgerRow rather than breaking the
+ * row. For a full worked calculation use <Example> instead.
+ */
+---
+
+<span class="eg"><slot /></span>
+
+<style>
+  .eg {
+    display: block;
+    margin-top: 0.35rem;
+    padding-left: 0.7rem;
+    border-left: 2px solid var(--ledger-green);
+    font-size: 0.8125rem;
+    color: var(--ledger-quiet);
+  }
+  .eg::before {
+    content: 'e.g. ';
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ledger-green);
+  }
+</style>

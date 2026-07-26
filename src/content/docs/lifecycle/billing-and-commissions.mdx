@@ -1,0 +1,31 @@
+---
+title: Billing and Commissions
+description: Money in, commissions out — installments, agency versus direct bill, dunning, and why billing ships as its own module.
+sidebar:
+  order: 5
+status: draft
+sources:
+  - Author synthesis — REQUIRES REVIEW
+---
+
+import ChainSummary from '@components/ChainSummary.astro';
+import Gaps from '@components/Gaps.astro';
+
+<ChainSummary slug="lifecycle/billing-and-commissions" />
+
+## Why this is a separate module
+
+Billing looks like a subset of policy administration and behaves like a different domain. A
+policy transaction produces a premium *amount*; billing decides **who owes what, when, and what
+happens when they don't pay** — which involves installment schedules, partial payments,
+suspense accounts, refunds that cross policy terms, and commission clawbacks.
+
+The major platforms ship billing separately for a reason, and homegrown systems that fold it
+into the PAS tend to discover why during their first cancellation-for-non-payment cycle.
+
+<Gaps>
+- Agency bill versus direct bill is the structural decision on this page and gets one line.
+- No worked example of an installment schedule surviving a mid-term endorsement — which is
+  where billing and effective dating collide.
+- Commission clawback on cancellation is unwritten.
+</Gaps>

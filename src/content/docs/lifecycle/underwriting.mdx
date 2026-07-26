@@ -1,0 +1,31 @@
+---
+title: Underwriting
+description: From proposal to bound risk — rules, referrals, straight-through processing, and the referral-queue model.
+sidebar:
+  order: 3
+status: draft
+sources:
+  - Author synthesis — REQUIRES REVIEW
+---
+
+import ChainSummary from '@components/ChainSummary.astro';
+import Gaps from '@components/Gaps.astro';
+
+<ChainSummary slug="lifecycle/underwriting" />
+
+## Bind is the event that matters
+
+Coverage begins at **bind**, not at document issue. This sounds like a detail and is not: it
+means a policy can be legally in force while its documents are still generating, and a claim
+can arrive in that window.
+
+Systems that treat issuance as the state transition — rather than bind — cannot answer whether
+a loss on the day of sale is covered.
+
+<Gaps>
+- The referral queue is named in the content plan as the model to explain and is not explained
+  here. What is a referral: a task, a policy state, or a transaction status?
+- Underwriting rules as a testable artefact — the rules-engine test suite the content plan
+  promises — is unwritten.
+- No worked referral example with thresholds.
+</Gaps>

@@ -1,0 +1,83 @@
+---
+title: Core Principles
+description: Indemnity, insurable interest, utmost good faith and proximate cause — and the validation rules and claim decisioning they turn into.
+sidebar:
+  order: 3
+status: draft
+sources:
+  - Author synthesis — REQUIRES REVIEW
+---
+
+import Ledger from '@components/Ledger.astro';
+import LedgerRow from '@components/LedgerRow.astro';
+import Eg from '@components/Eg.astro';
+import SystemsNote from '@components/SystemsNote.astro';
+import Gaps from '@components/Gaps.astro';
+
+These are the concepts to know cold. Every one of them shows up later as either a validation
+rule at proposal or a decision branch at claim.
+
+<Ledger>
+  <LedgerRow term="Sum insured / Limit">
+    The maximum the insurer will ever pay under the policy.
+    <Eg>a ₹10 lakh health floater caps the whole family's claims at ₹10 lakh for the year.</Eg>
+  </LedgerRow>
+  <LedgerRow term="Deductible / Excess">
+    The first slice of every loss that the insured bears before the insurer pays.
+    <Eg>₹5,000 excess on a ₹40,000 garage bill → you pay ₹5,000, the insurer pays ₹35,000.</Eg>
+  </LedgerRow>
+  <LedgerRow term="Insurable interest">
+    You may only insure something whose loss would financially hurt you.
+    <Eg>you can insure your own flat or your business partner's life — not a stranger's.</Eg>
+  </LedgerRow>
+  <LedgerRow term="Indemnity">
+    Insurance restores you to your pre-loss position — no profiting from claims. Life insurance
+    is the exception: it is a benefit contract.
+    <Eg>a stolen 5-year-old TV is paid at depreciated value, not the price of a new one.</Eg>
+  </LedgerRow>
+  <LedgerRow term="Utmost good faith">
+    Both parties must honestly disclose all material facts; non-disclosure can void the policy.
+    <Eg>hiding a heart condition on a life proposal can get the death claim repudiated.</Eg>
+  </LedgerRow>
+  <LedgerRow term="Subrogation">
+    After paying your claim, the insurer steps into your shoes to recover from the at-fault
+    third party.
+    <Eg>your insurer pays your ₹1 lakh repair, then recovers it from the at-fault truck's insurer.</Eg>
+  </LedgerRow>
+  <LedgerRow term="Proximate cause">
+    The dominant cause of the loss decides whether it is covered.
+    <Eg>a storm smashes a window and rain ruins the carpet — the storm, a covered peril, is the proximate cause of both.</Eg>
+  </LedgerRow>
+  <LedgerRow term="Endorsement / Rider">
+    A mid-term modification of the policy, with premium adjustment.
+    <Eg>adding a CNG kit to your car mid-year raises the IDV and the premium.</Eg>
+  </LedgerRow>
+  <LedgerRow term="Grace, lapse, revival">
+    Life and health mechanics around missed premiums: a grace window, policy lapse, and
+    reinstatement.
+    <Eg>miss a premium → grace period → lapse → revive within the allowed window by paying dues plus interest, sometimes with fresh health evidence.</Eg>
+  </LedgerRow>
+</Ledger>
+
+<SystemsNote>
+**Proximate cause is why your claims data model needs a cause-of-loss hierarchy.** A claim does
+not have "a cause" as a free-text field — it has a dominant cause, possibly contributing causes,
+and a chain between them. If the schema only records one flat code, you cannot reconstruct why
+a decision was made, and every disputed claim becomes an archaeology exercise.
+
+**Indemnity is why settlement is not just "pay the limit."** Depreciation, betterment, salvage
+and partial-loss rules all sit between the assessed amount and the cheque. Model settlement as a
+computation with named inputs, not a single amount field.
+
+**Utmost good faith is why the proposal answers must be stored immutably, with their version.**
+A repudiation defence rests on what was asked and what was answered, on that date, in that
+wording.
+</SystemsNote>
+
+<Gaps>
+- Each principle needs its India-specific legal grounding with a `verified:` date — currently
+  none of these carry statutory citations.
+- The cause-of-loss hierarchy is asserted, not modelled. It needs the actual structure, worked
+  against a multi-peril claim.
+- Contribution and average (underinsurance) are missing entirely.
+</Gaps>

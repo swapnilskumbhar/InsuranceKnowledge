@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="7" fill="#1f2937"/>
+  <!-- Shield: the indemnity mark. -->
+  <path d="M16 6.5 24 9.5v7.2c0 4.6-3.2 7.9-8 9.8-4.8-1.9-8-5.2-8-9.8V9.5z"
+        fill="none" stroke="#38bdf8" stroke-width="2.1"
+        stroke-linejoin="round"/>
+  <path d="M12.4 16.3 15 18.9l4.8-5"
+        fill="none" stroke="#38bdf8" stroke-width="2.1"
+        stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

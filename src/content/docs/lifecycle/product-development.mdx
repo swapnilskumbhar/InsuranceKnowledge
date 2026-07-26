@@ -1,0 +1,32 @@
+---
+title: Product Development
+description: Designing coverage, filing it with the regulator, and configuring it in core systems — why product config is a release-management problem.
+sidebar:
+  order: 1
+status: draft
+sources:
+  - Author synthesis — REQUIRES REVIEW
+---
+
+import ChainSummary from '@components/ChainSummary.astro';
+import Gaps from '@components/Gaps.astro';
+
+<ChainSummary slug="lifecycle/product-development" />
+
+## Why this is a release-management problem
+
+A product is not a configuration record. It is a **versioned artefact with a regulatory
+lifecycle**: drafted, filed, approved, effective from a date, superseded, and retained for as
+long as any policy written on it is still live or still capable of producing a claim.
+
+That means a product version outlives the policies written on it, and two policies sold a day
+apart may be on different versions with different wordings and different rates — permanently.
+
+<Gaps>
+- No worked example of an actual filing cycle with dates.
+- The relationship between product version, rate version and wording version is the crux of
+  this chapter and is not yet written. It links to `systems/product-configuration` and
+  `systems/rating-architecture`, neither of which exists.
+- IRDAI's specific filing regime (use-and-file versus file-and-use) needs a `verified:` date and
+  a citation.
+</Gaps>

@@ -1,0 +1,268 @@
+/*
+ * Ledger theme
+ * ------------
+ * The handbook is about documents — declarations pages, schedules, endorsements,
+ * ledgers. The visual language borrows from them deliberately: ruled lines,
+ * ledger paper, an underwriter's stamp red, "in force" green.
+ *
+ * These variables are the source of truth. Everything below, and every component
+ * in src/components/, reads from them — nothing hardcodes a colour.
+ */
+
+:root {
+  --ink: #1b2a41; /* deep policy-ink navy */
+  --ink-soft: #33465f;
+  --paper: #faf9f4; /* ledger paper */
+  --paper-deep: #f1efe6;
+  --line: #d8d4c6; /* ruled ledger line */
+  --seal: #a32638; /* underwriter's stamp red */
+  --ledger-green: #2e6e4e; /* "in force" green */
+  --muted: #6b7688;
+  --gold: #b08d2e;
+
+  --font-display: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+  --font-body: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Code', monospace;
+}
+
+/* ---------- Map onto Starlight's tokens ---------- */
+/* Starlight drives its entire UI from --sl-*. Overriding these themes the
+   sidebar, search, tables of contents and asides for free. */
+
+:root[data-theme='light'] {
+  --sl-color-accent-low: #e6dcd0;
+  --sl-color-accent: var(--seal);
+  --sl-color-accent-high: #7d1c2a;
+  /* --sl-color-white / --sl-color-black are contrast-semantic, not literal:
+     Starlight inverts them per theme. In light mode "white" is the HIGHEST
+     contrast colour (used for headings and aside body text), so it must be ink.
+     Setting it to actual white makes splash titles and asides unreadable. */
+  --sl-color-white: var(--ink);
+  --sl-color-gray-1: var(--ink);
+  --sl-color-gray-2: var(--ink-soft);
+  --sl-color-gray-3: var(--muted);
+  --sl-color-gray-4: #9aa3b2;
+  --sl-color-gray-5: var(--line);
+  --sl-color-gray-6: var(--paper-deep);
+  --sl-color-gray-7: #f6f4ec;
+  --sl-color-black: var(--paper);
+
+  --sl-color-text: var(--ink-soft);
+  --sl-color-text-accent: var(--seal);
+  --sl-color-bg: var(--paper);
+  --sl-color-bg-nav: var(--ink);
+  --sl-color-bg-sidebar: var(--ink);
+  --sl-color-hairline: var(--line);
+  --sl-color-hairline-light: var(--line);
+  --sl-color-hairline-shade: var(--line);
+
+  --ledger-surface: #ffffff;
+  --ledger-surface-alt: var(--paper-deep);
+  --ledger-border: var(--line);
+  --ledger-heading: var(--ink);
+  --ledger-body: var(--ink-soft);
+  --ledger-quiet: var(--muted);
+}
+
+/* Dark mode keeps the same semantics — ink becomes the page, paper becomes the
+   text — so the theme reads as the same document under a different lamp. */
+:root[data-theme='dark'] {
+  --sl-color-accent-low: #3a1319;
+  --sl-color-accent: #d4707c;
+  --sl-color-accent-high: #f0c2c8;
+  --sl-color-white: #f7f4ea;
+  --sl-color-gray-1: #eae7dc;
+  --sl-color-gray-2: #c7cedb;
+  --sl-color-gray-3: #9fb0c8;
+  --sl-color-gray-4: #7e8ca3;
+  --sl-color-gray-5: #3a475c;
+  --sl-color-gray-6: #253449;
+  --sl-color-gray-7: #1f2d40;
+  --sl-color-black: #16202f;
+
+  --sl-color-text: #c7cedb;
+  --sl-color-text-accent: #e0919b;
+  --sl-color-bg: #16202f;
+  --sl-color-bg-nav: #101827;
+  --sl-color-bg-sidebar: #101827;
+  --sl-color-hairline: #2c3a4f;
+  --sl-color-hairline-light: #2c3a4f;
+  --sl-color-hairline-shade: #2c3a4f;
+
+  --ledger-surface: #1d2939;
+  --ledger-surface-alt: #223046;
+  --ledger-border: #33455e;
+  --ledger-heading: #f7f4ea;
+  --ledger-body: #c7cedb;
+  --ledger-quiet: #93a1b5;
+
+  --seal: #d4707c;
+  --ledger-green: #5fae87;
+  --gold: #d0ab4c;
+}
+
+/* ---------- Typography ---------- */
+
+:root {
+  --sl-font: var(--font-body);
+  --sl-font-mono: var(--font-mono);
+}
+
+/* Starlight renders the page title as h1#_top OUTSIDE .sl-markdown-content,
+   so it needs targeting explicitly — otherwise every page title falls back to
+   the body font. */
+h1#_top,
+.sl-markdown-content h1,
+.sl-markdown-content h2,
+.sl-markdown-content h3,
+.sl-markdown-content h4,
+.site-title,
+.decl h2 {
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 0, 'WONK' 0;
+  letter-spacing: -0.005em;
+}
+
+.sl-markdown-content h2 {
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--ledger-border);
+}
+
+/* Section markers: the eyebrow/kicker treatment used throughout the handbook. */
+.eyebrow,
+.kicker {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ledger-quiet);
+}
+
+/* ---------- Nav chrome (header + sidebar) ---------- */
+/*
+ * The header and sidebar are deep navy in BOTH themes — that is the bound-document
+ * spine the design depends on, and the reason light mode reads as paper in a folder
+ * rather than as a plain white page.
+ *
+ * Because they are dark in light mode too, they cannot inherit the global gray ramp:
+ * Starlight's sidebar reads --sl-color-white for group labels and --sl-color-gray-2
+ * for links, and both are DARK in light mode. Left alone that paints dark text on a
+ * dark slab and the group labels vanish entirely. So the chrome re-declares its own
+ * tokens, and everything inside it inherits those instead.
+ */
+.header,
+.sidebar-pane {
+  --sl-color-white: #f7f4ea;
+  --sl-color-gray-1: #eae7dc;
+  --sl-color-gray-2: #c7cedb;
+  --sl-color-gray-3: #9fb0c8;
+  --sl-color-gray-4: #8695ad;
+  --sl-color-gray-5: rgba(255, 255, 255, 0.18);
+  --sl-color-gray-6: rgba(255, 255, 255, 0.09);
+  --sl-color-gray-7: rgba(255, 255, 255, 0.05);
+  --sl-color-text: #c7cedb;
+  --sl-color-text-accent: #e3b552;
+  --sl-color-hairline: rgba(255, 255, 255, 0.12);
+  --sl-color-hairline-light: rgba(255, 255, 255, 0.12);
+  --sl-color-hairline-shade: rgba(255, 255, 255, 0.12);
+  --sl-color-bg-inline-code: rgba(255, 255, 255, 0.1);
+  color: #c7cedb;
+}
+
+.sidebar-content {
+  font-size: var(--sl-text-sm);
+}
+
+/* Group labels get the eyebrow treatment used throughout the handbook, so the
+   sidebar reads as a table of contents rather than a list of links. */
+.sidebar-content .large {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #9fb0c8;
+}
+
+/* The current page is marked the way the source design did it — a soft overlay
+   with a gold rule — rather than Starlight's solid accent pill, which fights the
+   navy at this size. */
+.sidebar-content a[aria-current='page'],
+.sidebar-content a[aria-current='page']:hover,
+.sidebar-content a[aria-current='page']:focus {
+  background-color: rgba(255, 255, 255, 0.11);
+  color: #ffffff;
+  box-shadow: inset 2px 0 0 var(--gold);
+}
+
+.sidebar-content a:hover,
+.sidebar-content a:focus {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+}
+
+/* Brand sits in cream on the navy bar, not in the accent — the stamp red is
+   reserved for emphasis inside the content. */
+.site-title {
+  color: #f7f4ea;
+}
+
+site-search button[data-open-modal] {
+  background-color: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #c7cedb;
+}
+site-search button[data-open-modal]:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+site-search button[data-open-modal] kbd {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #9fb0c8;
+}
+
+/* The theme select and social icons sit on the navy bar too. */
+starlight-theme-select select,
+.social-icons a {
+  color: #c7cedb;
+}
+starlight-theme-select select:hover,
+.social-icons a:hover {
+  color: #ffffff;
+}
+
+/* Right-hand table of contents is on paper, not on the navy — keep it readable. */
+.right-sidebar {
+  background-color: transparent;
+}
+
+/* Tables inherit the ruled-ledger look rather than Starlight's default. */
+.sl-markdown-content table {
+  border: 1px solid var(--ledger-border);
+  border-collapse: collapse;
+  width: 100%;
+  display: block;
+  overflow-x: auto;
+}
+.sl-markdown-content th {
+  background: var(--ledger-surface-alt);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ledger-quiet);
+  text-align: left;
+}
+.sl-markdown-content th,
+.sl-markdown-content td {
+  border: 1px solid var(--ledger-border);
+  padding: 0.6rem 0.85rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
